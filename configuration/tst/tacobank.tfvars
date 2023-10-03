@@ -12,5 +12,3 @@ crm = {
 transactions = {
   enabled = false
 }
-
-# refresh_tst: 20231003-1
