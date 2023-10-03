@@ -5,10 +5,74 @@ on:
     branches: [main]
 
 jobs:
-  tfm-plan:
-    name: 📃 Plan All workspaces
+  list-changes:
+    name: 📜 list changes
+    uses: ./.github/workflows/shared-get-changes.yml
+
+  tfm-dev-plan:
+    name: 📃 Plan dev workspaces
+    if: ${{ needs.list-changes.outputs.conf_dev != '[]' }}
+    needs: list-changes
     uses: ./.github/workflows/shared-tf-apply.yml
     with:
-      workspaces: "['tst/arepabank', 'tst/tacobank', 'acc/arepabank', 'acc/tacobank', 'prd/arepabank', 'prd/tacobank']"
+      workspaces: ${{ needs.list-changes.outputs.conf_dev }}
       apply: false
     secrets: inherit
+
+  tfm-tst-plan:
+    name: 📃 Plan tst workspaces
+    if: ${{ needs.list-changes.outputs.conf_tst != '[]' }}
+    needs: list-changes
+    uses: ./.github/workflows/shared-tf-apply.yml
+    with:
+      workspaces: ${{ needs.list-changes.outputs.conf_tst }}
+      apply: false
+    secrets: inherit
+
+  tfm-acc-plan:
+    name: 📃 Plan acc workspaces
+    if: ${{ needs.list-changes.outputs.conf_acc != '[]' }}
+    needs: list-changes
+    uses: ./.github/workflows/shared-tf-apply.yml
+    with:
+      workspaces: ${{ needs.list-changes.outputs.conf_acc }}
+      apply: false
+    secrets: inherit
+
+  tfm-prd-plan:
+    name: 📃 Plan prd workspaces
+    if: ${{ needs.list-changes.outputs.conf_prd != '[]' }}
+    needs: list-changes
+    uses: ./.github/workflows/shared-tf-apply.yml
+    with:
+      workspaces: ${{ needs.list-changes.outputs.conf_prd }}
+      apply: false
+    secrets: inherit
+
+  aggregate-plans:
+    name: 📖 aggregate tf plans
+    runs-on: ubuntu-latest
+    needs: 
+    - tfm-dev-plan
+    - tfm-tst-plan
+    - tfm-acc-plan
+    - tfm-prd-plan
+    if: ${{ always() && !cancelled() && !failure() && (
+          needs.list-changes.outputs.conf_dev != '[]' ||
+          needs.list-changes.outputs.conf_tst != '[]' ||
+          needs.list-changes.outputs.conf_acc != '[]' ||
+          needs.list-changes.outputs.conf_prd != '[]' ) }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Download artifacts
+        id: download
+        uses: actions/download-artifact@v3
+      - name: 'Echo download path'
+        run: echo ${{steps.download.outputs.download-path }}
+      - name: Aggregate results
+        uses: ohpensource/terraform-plan-summarize-gh-action/aggregate@v0.1.3
+        with:
+          print-summary: true
+          attach-markdown-summary: true
+          attach-csv-summary: false
