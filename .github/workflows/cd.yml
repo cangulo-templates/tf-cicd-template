@@ -70,10 +70,8 @@ jobs:
       - name: Download artifacts
         id: download
         uses: actions/download-artifact@v3
-      - name: 'Echo download path'
-        run: echo ${{steps.download.outputs.download-path }}
       - name: Aggregate results
-        uses: ohpensource/terraform-apply-summarize-gh-action/aggregate@v0.1.3
+        uses: ohpensource/terraform-plan-summarize-gh-action/aggregate@v0.1.3
         with:
           print-summary: true
           attach-markdown-summary: true
