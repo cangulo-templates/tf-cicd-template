@@ -1,0 +1,16 @@
+
+name: 🚀 continuous-delivery
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tfm-apply:
+    name: 📃 TF Apply All workspaces
+    uses: ./.github/workflows/shared-tf-apply.yml
+    with:
+      workspaces: "['tst/arepabank', 'tst/tacobank', 'acc/arepabank', 'acc/tacobank', 'prd/arepabank', 'prd/tacobank']"
+      apply: true
+    secrets: inherit
