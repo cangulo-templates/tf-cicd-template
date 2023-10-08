@@ -19,6 +19,7 @@ jobs:
     with:
       workspaces: ${{ needs.list-changes.outputs.conf_dev }}
       apply: true
+      enable-gh-environment: true
     secrets: inherit
 
   tfm-tst-apply:
@@ -29,6 +30,7 @@ jobs:
     with:
       workspaces: ${{ needs.list-changes.outputs.conf_tst }}
       apply: true
+      enable-gh-environment: true
     secrets: inherit
 
   tfm-acc-apply:
@@ -39,6 +41,7 @@ jobs:
     with:
       workspaces: ${{ needs.list-changes.outputs.conf_acc }}
       apply: true
+      enable-gh-environment: true
     secrets: inherit
 
   tfm-prd-apply:
@@ -49,6 +52,7 @@ jobs:
     with:
       workspaces: ${{ needs.list-changes.outputs.conf_prd }}
       apply: true
+      enable-gh-environment: true
     secrets: inherit
 
   aggregate-plans:
