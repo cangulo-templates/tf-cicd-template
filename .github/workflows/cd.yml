@@ -55,6 +55,12 @@ jobs:
       enable-gh-environment: true
     secrets: inherit
 
+  tfm-checks:
+    name: 👮‍♂️ Terraform checks
+    if: ${{ needs.list-changes.outputs.conf_dev != '[]' }}
+    needs: list-changes
+    uses: ./.github/workflows/shared-tfm-checks.yml
+
   aggregate-plans:
     name: 📖 aggregate tf plans
     runs-on: ubuntu-latest
