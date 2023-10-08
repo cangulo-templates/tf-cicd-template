@@ -13,11 +13,16 @@ on:
       apply:
         type: boolean
         required: true
+      enable-gh-environment:
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   tf:
     name: ${{ matrix.workspace }} 
     runs-on: ubuntu-latest
+    environment: ${{ inputs.enable-gh-environment == true && matrix.workspace || '' }} 
     strategy:
       fail-fast: false
       matrix:
