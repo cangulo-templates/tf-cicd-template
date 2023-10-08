@@ -22,7 +22,7 @@ jobs:
   tf:
     name: ${{ matrix.workspace }} 
     runs-on: ubuntu-latest
-    environment: ${{ inputs.enable-gh-environment == true && matrix.workspace || '' }} 
+    environment: ${{ inputs.enable-gh-environment && matrix.workspace || '' }} 
     strategy:
       fail-fast: false
       matrix:
