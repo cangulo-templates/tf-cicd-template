@@ -12,3 +12,5 @@ crm = {
 transactions = {
   enabled = false
 }
+
+# dev_refresh_workspace: 20231008-1
