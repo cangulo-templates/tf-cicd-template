@@ -49,7 +49,7 @@ jobs:
         STAGE: dev
       with:
         script: |
-          const { getallWorkspaces, filterWorkspace } = require('./scripts/js-functions.js')
+          const { getallWorkspaces, filterWorkspace } = require('./scripts/shared-get-changes-functions.js')
           let workspaces  = []
           const returnAll = process.env.RETURN_ALL_WORKSPACES == 'true' 
           const stage     = process.env.STAGE
@@ -73,7 +73,7 @@ jobs:
         STAGE: tst
       with:
         script: |
-          const { getallWorkspaces, filterWorkspace } = require('./scripts/js-functions.js')
+          const { getallWorkspaces, filterWorkspace } = require('./scripts/shared-get-changes-functions.js')
           let workspaces  = []
           const returnAll = process.env.RETURN_ALL_WORKSPACES == 'true' 
           const stage     = process.env.STAGE
@@ -96,7 +96,7 @@ jobs:
         STAGE: acc
       with:
         script: |
-          const { filterWorkspace } = require('./scripts/js-functions.js')
+          const { filterWorkspace } = require('./scripts/shared-get-changes-functions.js')
           const filesModified       = JSON.parse(process.env.FILES_MODIFIED)
           const workspaces          = filterWorkspace(filesModified, process.env.STAGE)
           
@@ -111,7 +111,7 @@ jobs:
         STAGE: prd
       with:
         script: |
-          const { filterWorkspace } = require('./scripts/js-functions.js')
+          const { filterWorkspace } = require('./scripts/shared-get-changes-functions.js')
           const filesModified       = JSON.parse(process.env.FILES_MODIFIED)
           const workspaces          = filterWorkspace(filesModified, process.env.STAGE)
           
