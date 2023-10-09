@@ -1,11 +1,6 @@
 name: 🚔️ Terraform checks
 on:
   workflow_call:
-    inputs:      
-      push-reports:
-        type: boolean
-        required: false
-        default: false
 
 jobs:
   tfm-checks:
