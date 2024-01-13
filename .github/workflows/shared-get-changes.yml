@@ -41,7 +41,7 @@ jobs:
             tfm:
                 - 'terraform/**'
     - name: List dev workspaces
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       id: get-dev-workspaces
       env:
         RETURN_ALL_WORKSPACES: ${{ steps.changes.outputs.tfm }}
@@ -65,7 +65,7 @@ jobs:
           core.setOutput('workspaces', workspaces)
 
     - name: List tst workspaces
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       id: get-tst-workspaces
       env:
         RETURN_ALL_WORKSPACES: ${{ steps.changes.outputs.tfm }}
@@ -89,7 +89,7 @@ jobs:
           core.setOutput('workspaces', workspaces)
 
     - name: List acc workspaces
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       id: get-acc-workspaces
       env:
         FILES_MODIFIED: ${{ steps.changes.outputs.conf_acc_files }}
@@ -104,7 +104,7 @@ jobs:
           core.setOutput('workspaces', workspaces)
 
     - name: List prd workspaces
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       id: get-prd-workspaces
       env:
         FILES_MODIFIED: ${{ steps.changes.outputs.conf_prd_files }}
