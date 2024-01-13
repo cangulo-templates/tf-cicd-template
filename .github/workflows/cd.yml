@@ -7,6 +7,24 @@ on:
       - main
 
 jobs:
+  semver:
+    name: 🚀 release new version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+      with:
+        token: ${{ secrets.CANGULO_BOT_PUSH_COMMITS }} # required for pushing to main, it is a protected branch
+
+    - name: release new version
+      uses: cangulo-actions/semver@0.7.9
+      id: semver
+      with:
+        configuration: semver.yml
+        create-gh-release: true
+        print-summary: true
+        print-annotations: true
+
   list-changes:
     name: 📜 list changes
     uses: ./.github/workflows/shared-get-changes.yml

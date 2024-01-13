@@ -3,5 +3,5 @@ locals {
   resources_prefix = "${var.client}-${var.stage}-${var.service_group}-${local.service_name}"
 }
 
-# refresh_workspaces: 20231009-1
+# refresh_workspaces: 20240113-1
 
