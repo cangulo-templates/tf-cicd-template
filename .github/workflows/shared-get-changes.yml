@@ -23,7 +23,7 @@ jobs:
       conf_prd: ${{ steps.get-prd-workspaces.outputs.workspaces }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v4.1.0
+      uses: actions/checkout@v4
     - name: Paths Changes Filter
       uses: dorny/paths-filter@v2.11.1
       id: changes
