@@ -1,4 +1,3 @@
-
 name: 🚀 continuous-delivery
 
 on:
@@ -11,19 +10,19 @@ jobs:
     name: 🚀 release new version
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4.1.1
-      with:
-        token: ${{ secrets.CANGULO_BOT_PUSH_COMMITS }} # required for pushing to main, it is a protected branch
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CANGULO_BOT_PUSH_COMMITS }} # required for pushing to main, it is a protected branch
 
-    - name: release new version
-      uses: cangulo-actions/semver@0.7.9
-      id: semver
-      with:
-        configuration: semver.yml
-        create-gh-release: true
-        print-summary: true
-        print-annotations: true
+      - name: release new version
+        uses: cangulo-actions/semver@0.7.9
+        id: semver
+        with:
+          configuration: semver.yml
+          create-gh-release: true
+          print-summary: true
+          print-annotations: true
 
   list-changes:
     name: 📜 list changes
@@ -82,19 +81,19 @@ jobs:
   aggregate-plans:
     name: 📖 aggregate tf plans
     runs-on: ubuntu-latest
-    needs: 
-    - tfm-dev-apply
-    - tfm-tst-apply
-    - tfm-acc-apply
-    - tfm-prd-apply
+    needs:
+      - tfm-dev-apply
+      - tfm-tst-apply
+      - tfm-acc-apply
+      - tfm-prd-apply
     if: ${{ always() && !cancelled() && !failure() && (
-          needs.list-changes.outputs.conf_dev != '[]' ||
-          needs.list-changes.outputs.conf_tst != '[]' ||
-          needs.list-changes.outputs.conf_acc != '[]' ||
-          needs.list-changes.outputs.conf_prd != '[]' ) }}
+      needs.list-changes.outputs.conf_dev != '[]' ||
+      needs.list-changes.outputs.conf_tst != '[]' ||
+      needs.list-changes.outputs.conf_acc != '[]' ||
+      needs.list-changes.outputs.conf_prd != '[]' ) }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download artifacts
         id: download
         uses: actions/download-artifact@v3
