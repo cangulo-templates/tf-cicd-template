@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
-    
-      - name: Validate Conventional Commits 
+        uses: actions/checkout@v4
+
+      - name: Validate Conventional Commits
         uses: cangulo-actions/conventional-commits-validator@main
         with:
           calculate-next-release: true
           label-pr-with-release-type: true
           label-pr-with-commit-types: true
-          
+
   list-changes:
     name: 📜 list changes
     uses: ./.github/workflows/shared-get-changes.yml
@@ -72,19 +72,19 @@ jobs:
   aggregate-plans:
     name: 📖 aggregate tf plans
     runs-on: ubuntu-latest
-    needs: 
-    - tfm-dev-plan
-    - tfm-tst-plan
-    - tfm-acc-plan
-    - tfm-prd-plan
+    needs:
+      - tfm-dev-plan
+      - tfm-tst-plan
+      - tfm-acc-plan
+      - tfm-prd-plan
     if: ${{ always() && !cancelled() && !failure() && (
-          needs.list-changes.outputs.conf_dev != '[]' ||
-          needs.list-changes.outputs.conf_tst != '[]' ||
-          needs.list-changes.outputs.conf_acc != '[]' ||
-          needs.list-changes.outputs.conf_prd != '[]' ) }}
+      needs.list-changes.outputs.conf_dev != '[]' ||
+      needs.list-changes.outputs.conf_tst != '[]' ||
+      needs.list-changes.outputs.conf_acc != '[]' ||
+      needs.list-changes.outputs.conf_prd != '[]' ) }}
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download artifacts
         id: download
         uses: actions/download-artifact@v3

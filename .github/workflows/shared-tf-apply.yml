@@ -3,8 +3,8 @@ on:
   workflow_call:
     inputs:
       workspaces:
-        type: string 
-        description: 'workspaces keys in JSON format to be used for naming the workflow'
+        type: string
+        description: "workspaces keys in JSON format to be used for naming the workflow"
         required: true
       destroy-mode:
         type: boolean
@@ -20,9 +20,9 @@ on:
 
 jobs:
   tf:
-    name: ${{ matrix.workspace }} 
+    name: ${{ matrix.workspace }}
     runs-on: ubuntu-latest
-    environment: ${{ inputs.enable-gh-environment && matrix.workspace || '' }} 
+    environment: ${{ inputs.enable-gh-environment && matrix.workspace || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +33,7 @@ jobs:
       TF_FILES_PATH: "configuration/${{ matrix.workspace }}"
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }} # if any previous job did a commit, this ensures those are checkout here
