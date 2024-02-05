@@ -1,10 +1,34 @@
-  scopes:
-    print-summary: true
-    create-gh-release: true
-    list:
-      - key: tfm
-        files:
+scopes:
+  print-summary: true
+  create-gh-release: true
+  list:
+    - key: tfm
+      files:
         - "terraform/**"
-        versioning:
-          file: terraform/version.json
-          changelog: terraform/CHANGELOG.md
+      versioning:
+        file: terraform/version.json
+        changelog: terraform/CHANGELOG.md
+    - key: conf-dev
+      files:
+        - "configuration/dev/**"
+      versioning:
+        file: configuration/dev/version.json
+        changelog: configuration/dev/CHANGELOG.md
+    - key: conf-tst
+      files:
+        - "configuration/tst/**"
+      versioning:
+        file: configuration/tst/version.json
+        changelog: configuration/tst/CHANGELOG.md
+    - key: conf-acc
+      files:
+        - "configuration/acc/**"
+      versioning:
+        file: configuration/acc/version.json
+        changelog: configuration/acc/CHANGELOG.md
+    - key: conf-prd
+      files:
+        - "configuration/prd/**"
+      versioning:
+        file: configuration/prd/version.json
+        changelog: configuration/prd/CHANGELOG.md
